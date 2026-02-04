@@ -19,13 +19,13 @@ public class CheckoutServiceTest {
     public void testCalculateTotalPrice() {
         List<String> items = Arrays.asList("Apple", "Apple", "Orange", "Apple");
         BigDecimal totalPrice = checkoutService.getBasketAmount(items);
-        assertEquals(new BigDecimal("2.05"), totalPrice);
+        assertEquals(BigDecimal.valueOf(2.05), totalPrice);
     }
 
     @Test
     public void testCalculateTotalPriceWittUnknowProduct() {
         List<String> items = Arrays.asList("Apple", "Apple", "Orange", "Apple", "Banana");
         BigDecimal totalPrice = checkoutService.getBasketAmount(items);
-        assertEquals(new BigDecimal("2.05"), totalPrice);
+        assertEquals(BigDecimal.valueOf(2.05), totalPrice);
     }
 }
