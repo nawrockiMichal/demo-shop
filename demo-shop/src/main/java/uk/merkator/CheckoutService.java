@@ -6,15 +6,21 @@ import java.util.Objects;
 
 public class CheckoutService {
     private final PriceListRepository priceListRepository;
+    private final List<Offer> offers;
 
-    public CheckoutService(PriceListRepository priceListRepository) {
+    public CheckoutService(PriceListRepository priceListRepository, List<Offer> offers) {
+        this.offers = offers;
         this.priceListRepository = priceListRepository;
     }
 
     public BigDecimal getBasketAmount(List<String> items) {
-        return items.stream().map(priceListRepository::getPrice)
+        BigDecimal basketValue = items.stream().map(priceListRepository::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalDiscount = offers.stream()
+                .map(offer -> offer.getValue(items))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return basketValue.subtract(totalDiscount);
     }
 
 }
