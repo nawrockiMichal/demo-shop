@@ -1,6 +1,15 @@
 plugins {
     id("java")
 }
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(21)
+}
 
 group = "uk.merkator"
 version = "1.0-SNAPSHOT"
